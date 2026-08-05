@@ -2,286 +2,202 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="description" content="AutoSheets - Manage invoices, expenses, estimates and more" />
+  <link rel="manifest" href="/public/manifest.json" />
   <title>AutoSheets PWA</title>
-  <meta name="description" content="A modern Progressive Web App for managing invoices, expenses, estimates, payments, contacts, projects, and more — built for speed, offline support, and mobile-first experience." />
   <style>
-    :root {
-      --bg: #ffffff;
-      --surface: #f6f8fa;
-      --border: #d0d7de;
-      --text: #1f2328;
-      --text-secondary: #656d76;
-      --link: #0969da;
-      --accent: #1a7f37;
-      --code-bg: #f6f8fa;
-      --shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      font-size: 16px;
-    }
-
-    .container {
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem 4rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+      line-height: 1.5;
+      padding-bottom: 80px;
     }
 
     /* Header */
-    header {
-      margin-bottom: 2.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
+    .header {
+      background: #2563eb;
+      color: white;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
-    .repo-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
+    .header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .header p {
       font-size: 0.85rem;
-      color: var(--text-secondary);
-      margin-bottom: 0.75rem;
+      opacity: 0.9;
+      margin-top: 2px;
     }
 
-    h1 {
-      font-size: 2rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    /* Main content */
+    .container {
+      padding: 20px 16px;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    .subtitle {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      max-width: 680px;
+    .welcome {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
 
-    /* Sections */
-    section {
-      margin-bottom: 2.75rem;
+    .welcome h2 {
+      font-size: 1.25rem;
+      margin-bottom: 6px;
+      color: #1e293b;
     }
 
-    h2 {
-      font-size: 1.35rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .welcome p {
+      color: #64748b;
+      font-size: 0.95rem;
     }
 
-    h3 {
+    /* Features grid */
+    .section-title {
       font-size: 1.1rem;
       font-weight: 600;
-      margin: 1.5rem 0 0.75rem;
+      margin: 24px 0 12px;
+      color: #334155;
     }
 
-    /* Features list */
-    .features {
-      list-style: none;
+    .grid {
       display: grid;
-      gap: 0.65rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
-    .features li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-      padding: 0.35rem 0;
-    }
-
-    .features .icon {
-      flex-shrink: 0;
-      width: 1.35rem;
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 16px 12px;
       text-align: center;
-      font-size: 1.05rem;
-      line-height: 1.5;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: transform 0.15s;
     }
 
-    .features strong {
-      font-weight: 600;
+    .card:active {
+      transform: scale(0.97);
     }
 
-    /* Tech stack */
-    .tech-stack {
-      list-style: none;
-      display: grid;
-      gap: 0.5rem;
+    .card .icon {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
     }
 
-    .tech-stack li {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .tech-stack li::before {
-      content: "•";
-      color: var(--text-secondary);
-    }
-
-    /* Code block */
-    .code-block {
-      background: var(--code-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.1rem 1.25rem;
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 0.875rem;
-      line-height: 1.55;
-      overflow-x: auto;
-      margin-top: 0.75rem;
-      box-shadow: var(--shadow);
-    }
-
-    .code-block .comment {
-      color: #6e7781;
-    }
-
-    .code-block .cmd {
-      color: #0550ae;
-    }
-
-    /* Prerequisites */
-    ul.plain {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    ul.plain li {
-      position: relative;
-      padding-left: 1.25rem;
-      margin-bottom: 0.4rem;
-    }
-
-    ul.plain li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: var(--text-secondary);
-    }
-
-    /* Footer note */
-    footer {
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
+    .card .title {
       font-size: 0.9rem;
-      color: var(--text-secondary);
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    /* Bottom note */
+    .note {
       text-align: center;
+      margin-top: 30px;
+      padding: 16px;
+      color: #64748b;
+      font-size: 0.9rem;
     }
 
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .container {
-        padding: 1.5rem 1rem 3rem;
-      }
-      h1 {
-        font-size: 1.65rem;
-      }
+    .note strong {
+      color: #2563eb;
     }
   </style>
 </head>
 <body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>📊 AutoSheets</h1>
+    <p>Business management made simple</p>
+  </div>
+
   <div class="container">
-    <header>
-      <div class="repo-badge">
-        <span>📁</span>
-        <span>Tajoor621 / autosheets-pwa</span>
-      </div>
-      <h1>📊 AutoSheets PWA</h1>
-      <p class="subtitle">
-        A modern Progressive Web App for managing invoices, expenses, estimates,
-        payments, contacts, projects, and more — built for speed, offline support,
-        and mobile-first experience.
-      </p>
-    </header>
+
+    <!-- Welcome card -->
+    <div class="welcome">
+      <h2>Welcome back 👋</h2>
+      <p>Manage your invoices, expenses, and projects easily. This is the starting point of your PWA.</p>
+    </div>
 
     <!-- Features -->
-    <section>
-      <h2>✨ Features</h2>
-      <ul class="features">
-        <li><span class="icon">📊</span> <div><strong>Dashboard</strong> – Quick overview of your business</div></li>
-        <li><span class="icon">📄</span> <div><strong>Invoices</strong> – Create, view, and manage invoices</div></li>
-        <li><span class="icon">💰</span> <div><strong>Expenses</strong> – Track business expenses</div></li>
-        <li><span class="icon">📝</span> <div><strong>Estimates</strong> – Create and send estimates</div></li>
-        <li><span class="icon">💳</span> <div><strong>Payments</strong> – Record and manage payments</div></li>
-        <li><span class="icon">👥</span> <div><strong>Contacts</strong> – Customer &amp; vendor management</div></li>
-        <li><span class="icon">📁</span> <div><strong>Projects</strong> – Project tracking</div></li>
-        <li><span class="icon">⏱️</span> <div><strong>Time Tracking</strong> – Log working hours</div></li>
-        <li><span class="icon">🏦</span> <div><strong>Banking</strong> – Banking overview</div></li>
-        <li><span class="icon">📈</span> <div><strong>Reports</strong> – Business reports &amp; insights</div></li>
-        <li><span class="icon">📦</span> <div><strong>Items</strong> – Product/service catalog</div></li>
-        <li><span class="icon">📷</span> <div><strong>Scanner</strong> – Document / receipt scanning</div></li>
-        <li><span class="icon">⚙️</span> <div><strong>Settings</strong> – App configuration</div></li>
-        <li><span class="icon">📱</span> <div><strong>PWA Ready</strong> – Installable on mobile &amp; desktop with offline support</div></li>
-      </ul>
-    </section>
+    <div class="section-title">Quick Access</div>
 
-    <!-- Tech Stack -->
-    <section>
-      <h2>🛠️ Tech Stack</h2>
-      <ul class="tech-stack">
-        <li><strong>Frontend:</strong> React 18 + TypeScript</li>
-        <li><strong>Build Tool:</strong> Vite</li>
-        <li><strong>Styling:</strong> Tailwind CSS</li>
-        <li><strong>PWA:</strong> Workbox</li>
-        <li><strong>Routing:</strong> React Router (assumed)</li>
-        <li><strong>State:</strong> React Context API</li>
-      </ul>
-    </section>
-
-    <!-- Getting Started -->
-    <section>
-      <h2>🚀 Getting Started</h2>
-
-      <h3>Prerequisites</h3>
-      <ul class="plain">
-        <li>Node.js 18+</li>
-        <li>npm or yarn</li>
-      </ul>
-
-      <h3>Installation</h3>
-      <div class="code-block">
-        <span class="comment"># Clone the repository</span><br />
-        <span class="cmd">git clone</span> https://github.com/Tajoor621/autosheets-pwa.git<br /><br />
-        <span class="comment"># Navigate into the project</span><br />
-        <span class="cmd">cd</span> autosheets-pwa<br /><br />
-        <span class="comment"># Install dependencies</span><br />
-        <span class="cmd">npm install</span><br /><br />
-        <span class="comment"># Start development server</span><br />
-        <span class="cmd">npm run dev</span>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📊</div>
+        <div class="title">Dashboard</div>
       </div>
-    </section>
+      <div class="card">
+        <div class="icon">🧾</div>
+        <div class="title">Invoices</div>
+      </div>
+      <div class="card">
+        <div class="icon">💰</div>
+        <div class="title">Expenses</div>
+      </div>
+      <div class="card">
+        <div class="icon">📝</div>
+        <div class="title">Estimates</div>
+      </div>
+      <div class="card">
+        <div class="icon">💳</div>
+        <div class="title">Payments</div>
+      </div>
+      <div class="card">
+        <div class="icon">👥</div>
+        <div class="title">Contacts</div>
+      </div>
+      <div class="card">
+        <div class="icon">📁</div>
+        <div class="title">Projects</div>
+      </div>
+      <div class="card">
+        <div class="icon">⏱️</div>
+        <div class="title">Time Track</div>
+      </div>
+      <div class="card">
+        <div class="icon">🏦</div>
+        <div class="title">Banking</div>
+      </div>
+      <div class="card">
+        <div class="icon">📈</div>
+        <div class="title">Reports</div>
+      </div>
+      <div class="card">
+        <div class="icon">📦</div>
+        <div class="title">Items</div>
+      </div>
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <div class="title">Settings</div>
+      </div>
+    </div>
 
-    <footer>
-      Made with ❤️ for modern business management • 
-      <a href="https://github.com/Tajoor621/autosheets-pwa" target="_blank" rel="noopener">View on GitHub</a>
-    </footer>
+    <div class="note">
+      <p>This is a <strong>Progressive Web App</strong> foundation.</p>
+      <p>More features will be added step by step.</p>
+    </div>
+
   </div>
+
 </body>
 </html>
